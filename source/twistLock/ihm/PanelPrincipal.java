@@ -137,7 +137,8 @@ public class PanelPrincipal extends JPanel implements MouseListener
 		if(xModuloConteneur <= TAILLE_LOCK && yModuloConteneur <= TAILLE_LOCK)
 		{
 			this.ctrl.calculerScore();
-			this.ctrl.jouerTour(ySourisLock, xSourisLock);
+			if(! ctrl.placePrise(ySourisLock, xSourisLock))
+				this.ctrl.jouerTour(ySourisLock, xSourisLock);
 		}
 	}
 

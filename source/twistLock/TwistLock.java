@@ -45,7 +45,7 @@ public class TwistLock
 		}
 	}
 	
-	public Container[][] getTabContainer()    { return this.tabContainer ;}
+	public Container[][] getTabContainer()    { return tabContainer ;}
 	public Lock[][]      getTabLock()         { return this.tabLock      ;}
 	public int           getNumJoueur()       { return this.nbTour%2 + 1 ;}
 	public int getJoueurScore(int nJoueur)    { return this.tabJoueur[nJoueur].getScore()  ;}
@@ -68,16 +68,16 @@ public class TwistLock
 
 	public void calculerScore()
 	{
-		for ( int cpt = 0; cpt < this.tabJoueur.length; cpt++)
+		for (Joueur joueur : this.tabJoueur)
 		{
-			int score=0;
-			
-			for ( int cptLig=0; cptLig < this.tabContainer.length; cptLig++ )
-				for ( int cptCol=0; cptCol < this.tabContainer[0].length; cptCol++ )
-					if ( this.tabContainer[cptLig][cptCol].getCouleur() == this.tabJoueur[cpt].getCouleur() )
-						score += this.tabContainer[cptLig][cptCol].getPts() ;
-			
-			this.tabJoueur[cpt].setScore(score);
+			int score = 0;
+
+			for (Container[] containers : tabContainer)
+				for (int cptCol = 0; cptCol < tabContainer[0].length; cptCol++)
+					if (containers[cptCol].getCouleur() == joueur.getCouleur())
+						score += containers[cptCol].getPts();
+
+			joueur.setScore(score);
 		}
 	}
 	
@@ -96,18 +96,18 @@ public class TwistLock
 	
 	private void initContainer(int lig, int col)
 	{
-		this.tabContainer = new Container[lig][col];
+		tabContainer = new Container[lig][col];
 		
-		for ( int cptLig = 0; cptLig < this.tabContainer.length; cptLig++ )
-			for ( int cptCol = 0; cptCol < this.tabContainer[0].length; cptCol++ )
-				this.tabContainer[cptLig][cptCol] = new Container();
+		for ( int cptLig = 0; cptLig < tabContainer.length; cptLig++ )
+			for ( int cptCol = 0; cptCol < tabContainer[0].length; cptCol++ )
+				tabContainer[cptLig][cptCol] = new Container();
 	}
 	
 	private void initLock()
 	{
-		this.tabLock = new Lock[this.tabContainer.length+1][this.tabContainer[0].length+1];
+		this.tabLock = new Lock[tabContainer.length+1][tabContainer[0].length+1];
 		
-		if ( Controleur.DEBUG ) System.out.println("tabLock = " + (this.tabContainer.length+1) + ":" + (this.tabContainer[0].length+1) );
+		if ( Controleur.DEBUG ) System.out.println("tabLock = " + (tabContainer.length+1) + ":" + (tabContainer[0].length+1) );
 		
 		for ( int cptLig = 0; cptLig < this.tabLock.length; cptLig++ )
 			for ( int cptCol = 0; cptCol < this.tabLock[0].length; cptCol++ )
@@ -133,10 +133,10 @@ public class TwistLock
 				else
 				{
 					this.tabLock[cptLig][cptCol].setTabCont( new Container[] 
-					{ this.tabContainer[cptLig-1][cptCol-1],
-					  this.tabContainer[cptLig][cptCol-1],
-					  this.tabContainer[cptLig-1][cptCol],
-					  this.tabContainer[cptLig][cptCol]  } );
+					{ tabContainer[cptLig-1][cptCol-1],
+					  tabContainer[cptLig][cptCol-1],
+					  tabContainer[cptLig-1][cptCol],
+					  tabContainer[cptLig][cptCol]  } );
 				}
 			}
 		}
@@ -146,39 +146,39 @@ public class TwistLock
 	private void lierExtremite(int lig, int col)
 	{
 		if ( lig == 0 && col == this.tabLock[0].length-1 ) 
-			this.tabLock[lig][col].setTabCont( new Container[] {this.tabContainer[0][this.tabContainer[0].length-1] } );
+			this.tabLock[lig][col].setTabCont( new Container[] {tabContainer[0][tabContainer[0].length-1] } );
 		
 		if ( lig == 0 && col == 0 ) 
-			this.tabLock[lig][col].setTabCont( new Container[] {this.tabContainer[0][0] } );
+			this.tabLock[lig][col].setTabCont( new Container[] {tabContainer[0][0] } );
 		
 		if ( lig == this.tabLock.length-1 && col == this.tabLock[0].length-1 ) 
-			this.tabLock[lig][col].setTabCont( new Container[] {this.tabContainer[this.tabContainer.length-1][this.tabContainer[0].length-1] } );
+			this.tabLock[lig][col].setTabCont( new Container[] {tabContainer[tabContainer.length-1][tabContainer[0].length-1] } );
 		
 		if ( lig == this.tabLock.length-1 && col == 0 ) 
-			this.tabLock[lig][col].setTabCont( new Container[] {this.tabContainer[this.tabContainer.length-1][0] } );
+			this.tabLock[lig][col].setTabCont( new Container[] {tabContainer[tabContainer.length-1][0] } );
 	}
 	
 	private void lierCote(int lig, int col)
 	{
 		if (lig == 0)
 			this.tabLock[lig][col].setTabCont(new Container[]
-					{this.tabContainer[0][col - 1],
-							this.tabContainer[0][col]});
+					{tabContainer[0][col - 1],
+							tabContainer[0][col]});
 
 		if (lig == this.tabLock.length - 1)
 			this.tabLock[lig][col].setTabCont(new Container[]
-					{this.tabContainer[this.tabContainer.length - 1][col - 1],
-							this.tabContainer[this.tabContainer.length - 1][col]});
+					{tabContainer[tabContainer.length - 1][col - 1],
+							tabContainer[tabContainer.length - 1][col]});
 
 		if (col == 0)
 			this.tabLock[lig][col].setTabCont(new Container[]
-					{this.tabContainer[lig - 1][0],
-							this.tabContainer[lig][0]});
+					{tabContainer[lig - 1][0],
+							tabContainer[lig][0]});
 
 		if (col == this.tabLock[0].length - 1)
 			this.tabLock[lig][col].setTabCont(new Container[]
-					{this.tabContainer[lig - 1][this.tabContainer[0].length - 1],
-							this.tabContainer[lig][this.tabContainer[0].length - 1]});
+					{tabContainer[lig - 1][tabContainer[0].length - 1],
+							tabContainer[lig][tabContainer[0].length - 1]});
 	}
 
 	public String toString()
@@ -214,9 +214,9 @@ public class TwistLock
 		
 			
 			s += "\n     ";
-			for ( int col=0; col < this.tabContainer[0].length && lig < this.tabContainer.length; col++ )
+			for ( int col=0; col < tabContainer[0].length && lig < tabContainer.length; col++ )
 			{
-				s += "   " + this.tabContainer[lig][col];
+				s += "   " + tabContainer[lig][col];
 				
 			}
 			s += "\n";
@@ -231,5 +231,9 @@ public class TwistLock
 		
 		return s;
 	}
-	
+
+	public boolean placePrise(int lig, int col)
+	{
+		return this.tabLock[lig][col].getPossede() != ' ';
+	}
 }

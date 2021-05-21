@@ -48,6 +48,11 @@ public class Controleur
 		}
 	}
 
+	public boolean placePrise(int lig, int col)
+	{
+		return metier.placePrise(lig, col);
+	}
+
 	public boolean estFini()
 	{
 		return metier.estFini();
