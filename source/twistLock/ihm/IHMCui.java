@@ -14,7 +14,7 @@ public class IHMCui
 		this.ctrl = ctrl;
 	}
 
-	public void afficher()
+	public void afficher() throws InterruptedException
 	{
 		Scanner sc;
 		int     lig;

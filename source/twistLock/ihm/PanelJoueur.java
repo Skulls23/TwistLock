@@ -56,8 +56,6 @@ public class PanelJoueur extends JPanel
 		g.clearRect(0, 0, this.getWidth(), this.getHeight());
 		g.setColor(this.couleurGraphic);
 	    
-	    if(this.gagnant) g.fillRect(0, 0, this.getWidth(), this.getHeight());
-	    
 	    this.dessinerPhare(g);
 	    this.dessinerFeu(g);
 	    this.ecrireNomScore(g);

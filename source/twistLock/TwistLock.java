@@ -6,12 +6,6 @@ import twistLock.metier.Container;
 import twistLock.metier.Lock;
 import twistLock.metier.Joueur;
 
-import java.util.Scanner;
-import java.util.Locale;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Arrays;
-
 public class TwistLock
 {
 	public static final String ANSI_CYAN = "\u001B[36m";
@@ -29,7 +23,7 @@ public class TwistLock
 	{
 		this.initAll(nbCaseLig, nbCaseCol);
 		this.lierLockCont();
-		
+
 		this.tabJoueur = new Joueur[2];
 		
 		this.tabJoueur[0] = new Joueur("| Joueur 1 |", 'R');
@@ -64,8 +58,9 @@ public class TwistLock
 	{
 		if(this.estFini())
 		{
-			if(this.getJoueurScore(0) > this.getJoueurScore(1)) return 0;
-			if(this.getJoueurScore(0) < this.getJoueurScore(1)) return 1;
+			if(this.getJoueurScore(0) >  this.getJoueurScore(1)) return 1;
+			if(this.getJoueurScore(0) <  this.getJoueurScore(1)) return 2;
+			if(this.getJoueurScore(0) == this.getJoueurScore(1)) return 0;
 		}
 		
 		return -1;
@@ -165,27 +160,27 @@ public class TwistLock
 	
 	private void lierCote(int lig, int col)
 	{
-		if ( lig == 0 )
-			this.tabLock[lig][col].setTabCont( new Container[] 
-			{ this.tabContainer[0][col-1], 
-			  this.tabContainer[0][col]    } ) ;
-		
-		if ( lig == this.tabLock.length-1 )
-			this.tabLock[lig][col].setTabCont( new Container[] 
-			{ this.tabContainer[this.tabContainer.length-1][col-1], 
-			  this.tabContainer[this.tabContainer.length-1][col]    } ) ;
-		
-		if ( col == 0 )
-			this.tabLock[lig][col].setTabCont( new Container[] 
-			{ this.tabContainer[lig-1][0], 
-			  this.tabContainer[lig][0]    } ) ;
-		
-		if ( col == this.tabLock[0].length-1 )
-			this.tabLock[lig][col].setTabCont( new Container[] 
-			{ this.tabContainer[lig-1][this.tabContainer[0].length-1], 
-			  this.tabContainer[lig][this.tabContainer[0].length-1]    } ) ;
+		if (lig == 0)
+			this.tabLock[lig][col].setTabCont(new Container[]
+					{this.tabContainer[0][col - 1],
+							this.tabContainer[0][col]});
+
+		if (lig == this.tabLock.length - 1)
+			this.tabLock[lig][col].setTabCont(new Container[]
+					{this.tabContainer[this.tabContainer.length - 1][col - 1],
+							this.tabContainer[this.tabContainer.length - 1][col]});
+
+		if (col == 0)
+			this.tabLock[lig][col].setTabCont(new Container[]
+					{this.tabContainer[lig - 1][0],
+							this.tabContainer[lig][0]});
+
+		if (col == this.tabLock[0].length - 1)
+			this.tabLock[lig][col].setTabCont(new Container[]
+					{this.tabContainer[lig - 1][this.tabContainer[0].length - 1],
+							this.tabContainer[lig][this.tabContainer[0].length - 1]});
 	}
-	
+
 	public String toString()
 	{
 		String s="";

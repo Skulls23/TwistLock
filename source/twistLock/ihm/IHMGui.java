@@ -8,7 +8,7 @@ public class IHMGui extends JFrame
 {
 
 	private PanelPrincipal panelPrinc;
-	private PanelJoueur panelJoueur1;
+	private PanelJoueur    panelJoueur1;
 	private PanelJoueur    panelJoueur2;
 	private Controleur     ctrl;
 
@@ -30,11 +30,13 @@ public class IHMGui extends JFrame
 		this.setSize(1200, 600);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
+		this.setLocationRelativeTo(null);
 	}
 
 	public void majTour()
 	{
 		this.panelJoueur1.majTour();
 		this.panelJoueur2.majTour();
+		if(ctrl.estFini()) ctrl.AffichageDeFin();
 	}
 }
